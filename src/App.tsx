@@ -11,7 +11,7 @@ function App() {
     const [category, setCategory] = useState<CategoryType>(CATEGORIES.ALL);
 
     const {products} = useFetchProducts(search, category)
-    const onSearch = useCallback(function onSearch (value){
+    const onSearch = useCallback(function onSearch (value: string){
         setSearch(value)
     },[]);
 
