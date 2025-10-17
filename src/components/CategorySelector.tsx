@@ -1,4 +1,5 @@
-import {FC, memo, useEffect, useState} from "react";
+import { memo} from "react";
+import type {FC} from "react";
 import type {CATEGORIES as CategoryType} from "../utils/constants.ts";
 import {CATEGORIES} from "../utils/constants.ts";
 

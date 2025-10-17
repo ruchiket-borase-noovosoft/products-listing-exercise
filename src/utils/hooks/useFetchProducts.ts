@@ -3,10 +3,11 @@ import {useEffect, useState} from "react";
 import type {RequestType} from "../api.ts";
 import {API} from "../api.ts";
 import useFetch from "./useFetch.ts";
+import type {ProductType} from "../types/product.ts";
 
 export default function useFetchProducts (search: string, category: CATEGORIES) {
     const [products, setProducts] = useState<ProductType[]>([])
-    const [URL, setURL] = useState<RequestType>(null);
+    const [URL, setURL] = useState<RequestType>();
     const {data, loading, error} = useFetch<any>(URL, [URL]);
 
     useEffect(() => {

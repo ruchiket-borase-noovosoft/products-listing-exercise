@@ -1,3 +1,5 @@
+import type {ProductType} from "../utils/types/product.ts";
+
 export default function ProductCard ({product} : {product: ProductType}) {
     const discountedPrice = Math.round(product.discountPercentage) === 0 ? product.discountPercentage :  product.discountPercentage * product.price / 100 ;
     return(
