@@ -2,10 +2,10 @@ import type {CATEGORIES} from "./constants.ts";
 
 type APIMethodType = "GET" | "POST" | "DELETE";
 
-type RequestType = [string, APIMethodType]
+export type RequestType = [string, APIMethodType]
 
 const baseURL = 'https://dummyjson.com';
-function request<RequestType>(endpoint: string,  method: APIMethodType){
+function request(endpoint: string,  method: APIMethodType):RequestType{
     return [`${baseURL}/${endpoint}`, method]
 }
 
