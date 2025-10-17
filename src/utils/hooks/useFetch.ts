@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 import type {RequestType} from "../api.ts";
 
-export default function useFetch<T>(request : RequestType){
+export default function useFetch<T>(request : RequestType, dependencies : any[] = []){
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>(null);
-    const [data, setData] = useState<T>(null);
+    const [data, setData] = useState<T>();
 
     const handleFetch = async () => {
         setLoading(true);
@@ -28,7 +28,7 @@ export default function useFetch<T>(request : RequestType){
 
     useEffect(() => {
         handleFetch()
-        },[])
+        },dependencies)
 
     return {data, loading, error}
 }

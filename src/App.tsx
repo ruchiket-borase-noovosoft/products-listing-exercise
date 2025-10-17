@@ -1,42 +1,42 @@
-import {ReactElement, useCallback, useEffect, useState} from "react";
+import {useState, useCallback} from "react";
+import useFetchProducts from "./utils/hooks/useFetchProducts.ts";
+import type {CATEGORIES as CategoryType} from "./utils/constants.ts";
+import {CATEGORIES} from "./utils/constants.ts";
 import Search from "./components/Search.tsx";
-import {FormControl, InputLabel, Select, MenuItem} from "@mui/material";
-
-function handleFilter(products, category?: string){
-        return category ?  products.filter((product) => product.category === category) : products
-}
 
 function App() {
-    const [products, setProducts] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [filters, setFilters] = useState<{category:string}>();
-    const [search, setSearch] = useState<string>();
+    const [search, setSearch] = useState<string>("");
+    const [category, setCategory] = useState<CategoryType>(CATEGORIES.ALL);
 
-    useEffect(() => {
-        fetch('https://dummyjson.com/products/category-list')
-            .then(res => res.json())
-            .then(setCategories);
-    },[]);
+    const {products, loading, error} = useFetchProducts(search, category)
 
-    useEffect(() => {
-        fetch('https://dummyjson.com/products')
-            .then(res => res.json()).then((data) => setProducts(data.products));
 
-        console.log(products)
-    },[]);
-
-    useEffect(() => {
-        filters?.category && setProducts(prev => handleFilter(prev, filters.category))
-    },[filters]);
-
-    useEffect(() => {
-        if(products && !search) return;
-        fetch(`https://dummyjson.com/products/search?q=${search}`)
-            .then(res => res.json())
-            .then((data) => {setProducts(handleFilter(data.products, filters?.category))
-            });
-    },[search,filters]);
-
+  //
+  //   useEffect(() => {
+  //       fetch('https://dummyjson.com/products/category-list')
+  //           .then(res => res.json())
+  //           .then(setCategories);
+  //   },[]);
+  //
+  //   useEffect(() => {
+  //       fetch('https://dummyjson.com/products')
+  //           .then(res => res.json()).then((data) => setProducts(data.products));
+  //
+  //       console.log(products)
+  //   },[]);
+  //
+  //   useEffect(() => {
+  //       filters?.category && setProducts(prev => handleFilter(prev, filters.category))
+  //   },[filters]);
+  //
+  //   useEffect(() => {
+  //       if(products && !search) return;
+  //       fetch(`https://dummyjson.com/products/search?q=${search}`)
+  //           .then(res => res.json())
+  //           .then((data) => {setProducts(handleFilter(data.products, filters?.category))
+  //           });
+  //   },[search,filters]);
+  //
     const onSearch = useCallback(function onSearch (value){
         setSearch(value)
     },[]);
@@ -45,18 +45,15 @@ function App() {
     <div>
         <div className="flex items-center gap-4 p-4">
             <Search handleSearch={onSearch}/>
-                <select value={filters?.category} onChange={(e)=>{
-                    setFilters((prev)=>({...prev, category : e.target.value}))
+                <select value={category as string} onChange={(e)=>{
+                    setCategory(()=>(e.target.value as CategoryType))
                 }}>
-                    <option value="">All</option>
-                    {
-                        categories.map((category)=> (
-                            <option key={category} value={category.toLowerCase()}>{category}</option>
-                        ))
-                    }
+                    {(Object.keys(CATEGORIES) as Array<keyof typeof CATEGORIES>).map((key) => (
+                        <option>{CATEGORIES[key]}</option>
+                    ))}
                 </select>
         </div>
-        {products.map((product)=> (
+        {products?.map((product)=> (
             <div key={product.id}>
                 <img className="w-40 h-40" src={product.thumbnail}/>
                 {product.title}
