@@ -1,4 +1,4 @@
-enum CATEGORIES  {
+export enum CATEGORIES  {
     ALL = 'all',
     BEAUTY = "beauty",
     FRAGRANCES = "fragrances",
@@ -25,4 +25,3 @@ enum CATEGORIES  {
     WOMENSSHOES =  "womens-shoes",
     WOMENSWATCHES = "womens-watches"
 }
-export CATEGORIES;
