@@ -1,0 +1,56 @@
+import {CATEGORIES} from "../constants.ts";
+import {useEffect, useState} from "react";
+import type {RequestType} from "../api.ts";
+import {API} from "../api.ts";
+import useFetch from "./useFetch.ts";
+
+function useFetchProducts (search: string, category: CATEGORIES) {
+    const [products, setProducts] = useState<ProductType[]>([])
+    const [URL, setURL] = useState<RequestType>(null);
+    const {data, loading, error} = useFetch<any>(URL);
+
+    useEffect(() => {
+        const list: ProductType[] = data.products
+        const isSearching = URL?.[0].includes("search")
+
+        // category over search
+        if(isSearching && category !== CATEGORIES.ALL){
+            const filterList = list.filter((product) => product.category === category)
+            return setProducts( filterList || [])
+        }
+
+        // search over category
+        else if(!isSearching && category !== CATEGORIES.ALL){
+            // search algo
+           const searchItems =  list.filter((product) => {
+                product.title.includes(search)
+            })
+            return setProducts(searchItems || [])
+        }
+
+        setProducts(list);
+
+    },[data]);
+
+    useEffect(() => {
+        if(!search && category === CATEGORIES.ALL){
+            setURL(API.products.list())
+        }
+    }, []);
+
+    // effect for search
+    useEffect(() => {
+        if(!search) return;
+        const requestUrl = API.products.search(search)
+        setURL(requestUrl)
+    }, [search]);
+
+    // effect for category
+    useEffect(() => {
+        if(category === CATEGORIES.ALL) return;
+        const requestUrl = API.products.filter(category)
+        setURL(requestUrl)
+    }, []);
+
+    return {products, loading, error}
+}

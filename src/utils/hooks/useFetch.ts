@@ -30,5 +30,5 @@ export default function useFetch<T>(request : RequestType){
         handleFetch()
         },[])
 
-    return {data, loading, error, handleFetch}
+    return {data, loading, error}
 }

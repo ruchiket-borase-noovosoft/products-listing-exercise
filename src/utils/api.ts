@@ -11,14 +11,14 @@ function request(endpoint: string,  method: APIMethodType):RequestType{
 
 export const API = {
     products: {
-        list: () => {
-            request(`products`, "GET")
-        },
-        search: (param: string) => {
+        list: () => (
+            request(`products`, "GET"))
+        ,
+        search: (param: string) =>(
             request(`products/search?q=${param}`, "GET")
-        },
-        filter: (category: CATEGORIES) => {
+        ),
+        filter: (category: CATEGORIES) => (
             request(`products/category/${category}`, "GET")
-        }
+        )
     },
 }

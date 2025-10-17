@@ -1,4 +1,5 @@
 export enum CATEGORIES  {
+    ALL = "all",
     BEAUTY = "beauty",
     Fragrances = "fragrances",
     Furniture = "furniture",
