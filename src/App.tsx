@@ -3,6 +3,7 @@ import useFetchProducts from "./utils/hooks/useFetchProducts.ts";
 import type {CATEGORIES as CategoryType} from "./utils/constants.ts";
 import {CATEGORIES} from "./utils/constants.ts";
 import Search from "./components/Search.tsx";
+import ProductCard from "./components/ProductCard.tsx";
 
 function App() {
     const [search, setSearch] = useState<string>("");
@@ -42,23 +43,26 @@ function App() {
     },[]);
 
     return (
-    <div>
-        <div className="flex items-center gap-4 p-4">
+    <div className="w-full h-full md:w-[80%] mx-auto">
+        <div className="w-full p-4 flex items-center justify-center border-b border-gray-200">
+            <h3 className="font-bold text-lg">ProCommerce</h3>
+        </div>
+        <div className="flex items-center gap-4 p-4 w-full bg-gray-100 justify-center">
             <Search handleSearch={onSearch}/>
-                <select value={category as string} onChange={(e)=>{
+                <select className="py-2 px-4 bg-white rounded-md outline-none focus:ring ring-gray-500 border border-gray-300 transition-all" value={category as string} onChange={(e)=>{
                     setCategory(()=>(e.target.value as CategoryType))
                 }}>
                     {(Object.keys(CATEGORIES) as Array<keyof typeof CATEGORIES>).map((key) => (
-                        <option>{CATEGORIES[key]}</option>
+                        <option>{CATEGORIES[key].toUpperCase()}</option>
                     ))}
                 </select>
         </div>
-        {products?.map((product)=> (
-            <div key={product.id}>
-                <img className="w-40 h-40" src={product.thumbnail}/>
-                {product.title}
-            </div>
-        ))}
+        <div className="flex gap-4 w-full flex-wrap p-4">
+            {products?.map((product)=> (
+                <ProductCard product={product} />
+            ))}
+        </div>
+
     </div>
   )
 }
