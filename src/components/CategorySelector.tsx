@@ -16,7 +16,7 @@ export default memo(function CategorySelector ({handleSelect, category}: handleS
             handleSelect(e.target.value as CategoryType)
         }}>
             {(Object.keys(CATEGORIES) as Array<keyof typeof CATEGORIES>).map((key) => (
-                <option>{CATEGORIES[key].toUpperCase()}</option>
+                <option>{CATEGORIES[key]}</option>
             ))}
         </select>
     )

@@ -1,5 +1,5 @@
 export default function ProductCard ({product} : {product: ProductType}) {
-    const discountedPrice = Math.round(product.discountPercentage) === 0 ? product.discountPercentage : product.discountPercentage / 100 * product.price;
+    const discountedPrice = Math.round(product.discountPercentage) === 0 ? product.discountPercentage :  product.discountPercentage * product.price / 100 ;
     return(
         <div className="relative flex flex-col group gap-2 cursor-pointer items-center p-4 shadow-sm rounded-2xl md:max-w-[280px]">
             <img className="object-cover group-hover:scale-[1.1] transition-all w-60" src={product.thumbnail}/>
