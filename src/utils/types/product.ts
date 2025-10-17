@@ -1,0 +1,15 @@
+interface ProductType {
+    id: number,
+    title: string,
+    availabilityStatus: string,
+    description: string,
+    category: string,
+    discountPercentage: number,
+    images: string[],
+    price: number,
+    rating: number,
+    returnPolicy: string,
+    stock: number,
+    tags: string[],
+    thumbnail: string,
+}

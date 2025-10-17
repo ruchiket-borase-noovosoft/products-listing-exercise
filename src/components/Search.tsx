@@ -17,6 +17,7 @@ type SearchPropType = {
     return (
         <div>
             <input
+                className="outline-none w-full h-full border border-gray-500 px-3 py-2 rounded-md"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="search"/>

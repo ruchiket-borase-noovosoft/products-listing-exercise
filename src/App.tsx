@@ -1,5 +1,6 @@
-import {useCallback, useEffect, useState} from "react";
+import {ReactElement, useCallback, useEffect, useState} from "react";
 import Search from "./components/Search.tsx";
+import {FormControl, InputLabel, Select, MenuItem} from "@mui/material";
 
 function handleFilter(products, category?: string){
         return category ?  products.filter((product) => product.category === category) : products
@@ -11,7 +12,6 @@ function App() {
     const [filters, setFilters] = useState<{category:string}>();
     const [search, setSearch] = useState<string>();
 
-
     useEffect(() => {
         fetch('https://dummyjson.com/products/category-list')
             .then(res => res.json())
@@ -20,7 +20,9 @@ function App() {
 
     useEffect(() => {
         fetch('https://dummyjson.com/products')
-            .then(res => res.json()).then((data) => setProducts(data.products))
+            .then(res => res.json()).then((data) => setProducts(data.products));
+
+        console.log(products)
     },[]);
 
     useEffect(() => {
@@ -28,6 +30,7 @@ function App() {
     },[filters]);
 
     useEffect(() => {
+        if(products && !search) return;
         fetch(`https://dummyjson.com/products/search?q=${search}`)
             .then(res => res.json())
             .then((data) => {setProducts(handleFilter(data.products, filters?.category))
@@ -40,9 +43,8 @@ function App() {
 
     return (
     <div>
-        <div>
+        <div className="flex items-center gap-4 p-4">
             <Search handleSearch={onSearch}/>
-            <div>
                 <select value={filters?.category} onChange={(e)=>{
                     setFilters((prev)=>({...prev, category : e.target.value}))
                 }}>
@@ -53,7 +55,6 @@ function App() {
                         ))
                     }
                 </select>
-            </div>
         </div>
         {products.map((product)=> (
             <div key={product.id}>
@@ -66,3 +67,6 @@ function App() {
 }
 
 export default App
+
+//search changes -> filter apply to the new products
+//filters changes -> search products should be applied with new category
