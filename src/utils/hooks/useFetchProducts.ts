@@ -7,7 +7,7 @@ import type {ProductType} from "../types/product.ts";
 
 export default function useFetchProducts (search: string, category: CATEGORIES) {
     const [products, setProducts] = useState<ProductType[]>([])
-    const [URL, setURL] = useState<RequestType>();
+    const [URL, setURL] = useState<RequestType>(["", "GET"]);
     const {data, loading, error} = useFetch<any>(URL, [URL]);
 
     useEffect(() => {

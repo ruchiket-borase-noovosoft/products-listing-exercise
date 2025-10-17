@@ -1,4 +1,5 @@
-import {FC, memo, useEffect, useState} from "react";
+import {memo, useEffect, useState} from "react";
+import type {FC} from "react";
 
 type SearchPropType = {
     handleSearch: (value: string) => void
