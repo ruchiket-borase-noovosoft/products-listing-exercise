@@ -26,7 +26,7 @@ function Home() {
                 />
             </div>
             <div className="flex mx-auto gap-4 w-full flex-wrap p-4">
-                {loading || !products?.length > 0 ? <div>
+                {loading ? <div>
                     <div role="status" className="flex gap-4 w-full mx-auto max-w-full flex-wrap animate-pulse">
                         {Array(8).fill(0).map((_,index) => <div key={index} className="h-[22rem] w-[17rem] bg-gray-200 rounded-sm"></div>)}
                         <span className="sr-only">Loading...</span>

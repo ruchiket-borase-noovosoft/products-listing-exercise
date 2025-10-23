@@ -1,7 +1,9 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Home from "./Home.tsx";
 import type {ReactElement} from "react";
 import Cart from "./Cart.tsx";
+import * as React from "react";
+
+const Home = React.lazy(() => import("./Home.tsx"));
 
 export default function Routers () {
     return(

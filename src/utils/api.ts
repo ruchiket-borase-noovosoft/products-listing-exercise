@@ -21,4 +21,9 @@ export const API = {
             request(`products/category/${category}`, "GET")
         )
     },
+    users: {
+        list: () => (
+            request(`users`, "GET")
+        )
+    }
 }
