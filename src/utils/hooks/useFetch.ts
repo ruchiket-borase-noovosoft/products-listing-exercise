@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import type {RequestType} from "../api.ts";
 
 export default function useFetch<T>(request? : RequestType, dependencies : any[] = []){
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | undefined>(undefined);
     const [data, setData] = useState<T>();
 
