@@ -6,10 +6,11 @@ import {StoreDispatchProvider, StoreProvider} from "./store.ts";
 import useFetch from "./hooks/useFetch.ts";
 import {API} from "./api.ts";
 import type {UserType} from "./types/user.ts";
+import type {ProductType} from "./types/product.ts";
 
 export type StoreReducerType = {
     type: "add_to_cart" | "remove_from_cart" | "add_user" | "change_user" | "cart_init",
-    payload?: Partial<UserType | any>
+    payload?: Partial<UserType> | any
 }
 
 const storeReducer = (store: StoreType, action: StoreReducerType) => {
@@ -27,34 +28,33 @@ const storeReducer = (store: StoreType, action: StoreReducerType) => {
     }
 }
 
+const initialStore = {
+    user: {
+        id: 1
+    },
+    cart: []
+}
+
 export default function Providers({children}: {children: React.ReactElement}){
-    // store with user & cart
-    const initialStore = {
-        user: {
-            id: 1
-        },
-        cart: []
-    }
-    const [store, dispatchStore] = useReducer<StoreType>(storeReducer as StoreReducerType, initialStore);
+    const [store, dispatchStore] = useReducer(storeReducer, initialStore);
     const {data:user} = useFetch(API.users.get(store.user.id || 1));
     const {data:cart} = useFetch(API.cart.get(store.user.id || 1));
 
-
     useEffect(() => {
-        if(user){
-            dispatchStore({type: "add_user", payload: user} as any)
+        if(user as UserType){
+            dispatchStore({type: "add_user", payload: user})
         }
     }, [user])
 
     useEffect(() => {
         if(cart){
-            dispatchStore({type: "cart_init", payload: cart.carts} as any)
+            dispatchStore({type: "cart_init", payload: (cart as {carts?: ProductType[]}).carts})
         }
     }, [cart]);
 
     return (
         <BrowserRouter>
-            <StoreProvider value={store}>
+            <StoreProvider value={store as StoreType}>
                 <StoreDispatchProvider value={dispatchStore}>
                     {children}
                 </StoreDispatchProvider>

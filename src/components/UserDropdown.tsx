@@ -8,14 +8,14 @@ import {StoreDispatchProvider, StoreProvider} from "../utils/store.ts";
 
 export default function UserDropdown (){
     const [show, setShow] = useState(false);
-    const [users, setUsers] = useState<UserType>()
+    const [users, setUsers] = useState<UserType[]>()
     const {loading, data} = useFetch(API.users.list());
-    const {user, cart} = useContext(StoreProvider);
+    const {user} = useContext(StoreProvider);
     const storeDispatch = useContext(StoreDispatchProvider);
 
     useEffect(() => {
-        if(data?.users){
-            setUsers(data.users)
+        if((data as { users: UserType[] })?.users){
+            setUsers((data as { users: UserType[] }).users)
         }
     },[data]);
 
@@ -55,7 +55,11 @@ export default function UserDropdown (){
     )
 }
 
-function UserCard ({user, className, onClick}: { user:UserType, className?:string, onClick?: (user:UserType) => void }) {
+function UserCard({user, className, onClick}: {
+    user: UserType,
+    className?: string,
+    onClick?: (user: UserType) => void,
+}) {
     return (
         <div onClick={() => onClick(user)} className={`z-20 flex items-center gap-2 text-xs hover:bg-gray-100 p-4 py-3 cursor-pointer ${className}`}>
             <img src={user.image} className="w-8 rounded-full border border-gray-300" />

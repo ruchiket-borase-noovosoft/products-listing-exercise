@@ -1,5 +1,6 @@
 import * as React from "react"
-const ShopIcon = (props: React.SVGProps<SVGElement>) => (
+import type {SVGProps} from "react";
+const ShopIcon = (props: SVGProps<SVGSVGElement>) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         width={18}
