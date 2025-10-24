@@ -48,7 +48,7 @@ export default function Providers({children}: {children: React.ReactElement}){
 
     useEffect(() => {
         if(cart){
-            dispatchStore({type: "cart_init", payload: user} as any)
+            dispatchStore({type: "cart_init", payload: cart.carts} as any)
         }
     }, [cart]);
 

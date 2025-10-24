@@ -1,6 +1,6 @@
 import type {CATEGORIES} from "./constants.ts";
 
-type APIMethodType = "GET" | "POST" | "DELETE";
+type APIMethodType = "GET" | "POST" | "DELETE" | "PUT";
 
 export type RequestType = [string, APIMethodType]
 
@@ -32,6 +32,9 @@ export const API = {
     cart: {
         get: (id: string | number) => (
             request(`carts/user/${id}`, "GET")
+        ),
+        update: () => (
+            request(`carts/1`, "PUT")
         )
     }
 }
