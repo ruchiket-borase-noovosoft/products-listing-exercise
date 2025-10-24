@@ -1,9 +1,9 @@
-import type {UserType} from "../components/UserDropdown.tsx";
-import {createContext, useContext} from "react";
+import {createContext} from "react";
+import type {StoreReducerType} from "./Providers.tsx";
+import type {UserType} from "./types/user.ts";
 
 export interface StoreType {
-    value: {   user: Partial<UserType>,
-        cart: any[]}, handler: () => void
+     user: UserType, cart: any[]
 }
 
 const initialStore = {
@@ -13,4 +13,6 @@ const initialStore = {
     cart : []
 }
 
-export const StoreProvider  = createContext<StoreType>({value: initialStore, handler: () => {}})
+export const StoreProvider  = createContext<StoreType>({value: initialStore})
+
+export const StoreDispatchProvider = createContext<(store: StoreType, action: StoreReducerType) =>void>(null)

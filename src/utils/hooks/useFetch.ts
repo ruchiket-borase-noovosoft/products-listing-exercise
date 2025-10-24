@@ -30,7 +30,7 @@ export default function useFetch<T>(request? : RequestType, dependencies : any[]
 
     useEffect(() => {
         handleFetch()
-        },dependencies)
+    },dependencies)
 
-    return {data, loading, error}
+    return {data, loading, error, handleFetch}
 }

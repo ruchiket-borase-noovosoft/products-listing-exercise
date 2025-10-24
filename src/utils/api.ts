@@ -24,6 +24,14 @@ export const API = {
     users: {
         list: () => (
             request(`users`, "GET")
+        ),
+        get: (id: string | number) => (
+            request(`users/${id}`, "GET")
+        )
+    },
+    cart: {
+        get: (id: string | number) => (
+            request(`carts/user/${id}`, "GET")
         )
     }
 }

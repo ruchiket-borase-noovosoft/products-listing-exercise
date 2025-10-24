@@ -1,24 +1,29 @@
 import * as React from "react";
 import {BrowserRouter} from "react-router-dom";
-import {useReducer} from "react";
-import type {UserType} from "../components/UserDropdown.tsx";
+import {useEffect, useReducer} from "react";
 import type {StoreType} from "./store.ts";
+import {StoreDispatchProvider, StoreProvider} from "./store.ts";
+import useFetch from "./hooks/useFetch.ts";
+import {API} from "./api.ts";
+import type {UserType} from "./types/user.ts";
 
-type StoreReducerType = {
-    type: "add_to_cart" | "remove_from_cart" | "add_user" | "change_user",
+export type StoreReducerType = {
+    type: "add_to_cart" | "remove_from_cart" | "add_user" | "change_user" | "cart_init",
     payload?: Partial<UserType | any>
 }
 
 const storeReducer = (store: StoreType, action: StoreReducerType) => {
     switch (action.type){
         case "add_to_cart" :
-            const cart = [...store.value.cart, action.payload];
-            return {value: {...store.value, cart: newCart}}
+            const cart = [...store.cart, action.payload];
+            return {...store, cart: cart}
         case "remove_from_cart" :
-            const newCart = store.value.cart.filter((item) => item.id !== action.payload.id);
-            return {value: {...store.value, cart: newCart}}
+            const newCart = store.cart.filter((item) => item.id !== action.payload.id);
+            return {...store, cart: newCart}
         case "add_user":
-            return {value: {...store.value, user: action.payload, cart: []}}
+            return {user: action.payload, cart: []}
+        case "cart_init":
+            return {...store , cart: action.payload}
     }
 }
 
@@ -28,14 +33,32 @@ export default function Providers({children}: {children: React.ReactElement}){
         user: {
             id: 1
         },
-        cart: [],
-        dispatch:
+        cart: []
     }
-    const [store, dispatchStore] = useReducer(storeReducer, initialStore);
+    const [store, dispatchStore] = useReducer<StoreType>(storeReducer as StoreReducerType, initialStore);
+    const {data:user} = useFetch(API.users.get(store.user.id || 1));
+    const {data:cart} = useFetch(API.cart.get(store.user.id || 1));
+
+
+    useEffect(() => {
+        if(user){
+            dispatchStore({type: "add_user", payload: user} as any)
+        }
+    }, [user])
+
+    useEffect(() => {
+        if(cart){
+            dispatchStore({type: "cart_init", payload: user} as any)
+        }
+    }, [cart]);
 
     return (
         <BrowserRouter>
-            {children}
+            <StoreProvider value={store}>
+                <StoreDispatchProvider value={dispatchStore}>
+                    {children}
+                </StoreDispatchProvider>
+            </StoreProvider>
         </BrowserRouter>
     )
 }

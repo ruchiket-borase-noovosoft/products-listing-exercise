@@ -25,11 +25,11 @@ export default function useFetchProducts (search: string, category: CATEGORIES) 
         else if(!isSearching && search !== "" && category !== CATEGORIES.ALL){
             // search algo
            const items =  list.filter((product) => {
-                product.title.includes(search)
+                return product.title.toLowerCase().includes(search.toLowerCase())
             })
             return setProducts(items || [])
         }
-        setProducts(list);
+        else setProducts(list);
 
     },[data, search, category]);
 
