@@ -38,12 +38,12 @@ export default function UserDropdown (){
 
     return (
         <div className="relative">
-            <div onClick={() => setShow(prev => !prev)} className="z-20 flex items-center gap-2 text-sm">
+            <div onClick={() => setShow(prev => !prev)} className="z-20 flex items-center gap-2 text-sm cursor-pointer">
                 <img src={user.image} className="w-8 rounded-full border border-gray-300" />
                 {user.firstName}
             <ArrowBottom className={`${show && 'rotate-180'} transition-all`}/>
         </div>
-        <div className={`absolute flex flex-col z-10 ${!show ? "translate-x-10 invisible opacity-0 pointer-events-none" : "visible translate-0"} transition-all top-14 w-full min-w-[144px] h-[300px] max-h-[300px] overflow-y-scroll rounded-md bg-white shadow-sm`}>
+        <div className={`absolute z-50 flex flex-col z-10 ${!show ? "translate-x-10 invisible opacity-0 pointer-events-none" : "visible -translate-x-8"} transition-all top-14 w-full min-w-[144px] h-[300px] max-h-[300px] overflow-y-scroll rounded-md bg-white shadow-sm`}>
             {
                 users && !loading && users.map((u:UserType) =>(
                     <UserCard onClick={(us:UserType) => onUserSelect(us) }

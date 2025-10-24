@@ -21,12 +21,12 @@ export default function Navbar () {
     ]
 
     return (
-        <div className="w-full sticky top-0 backdrop-blur-md z-50 p-4 flex justify-between items-center border-b border-gray-200">
+        <div className="w-full sticky top-0 backdrop-blur-md bg-white/30 z-50 p-4 flex justify-between items-center border-b border-gray-200">
             <NavLink to="/"><h3 className="flex-1 font-bold text-sm md:text-lg">ProCommerce</h3></NavLink>
             <div className="flex gap-6 items-center">
                 <div className="flex gap-3 items-center">
-                {navs.map((nav) => (
-                    <NavLink key={nav.name} className={`relative p-1 rounded-lg ${nav.path === path.pathname && " bg-gray-100/30 border border-gray-200 font-bold"}`} to={nav.path}>{nav.name}
+                {navs.map((nav,i) => (
+                    <NavLink key={i} className={`relative p-1 rounded-lg ${nav.path === path.pathname && " bg-gray-100/30 border border-gray-200 font-bold"}`} to={nav.path}>{nav.name}
                         {nav?.count > 0 && <span className="absolute bg-yellow-500 aspect-square w-4 text-center -top-2 -right-2 text-xs rounded-full">{nav?.count}</span>}
                     </NavLink>
                 ))}

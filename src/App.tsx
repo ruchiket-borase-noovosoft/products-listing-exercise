@@ -19,7 +19,7 @@ function App() {
 
     return (
         <Providers>
-    <div className="w-screen h-full overflow-hidden md:w-[80%] md:mx-auto">
+    <div className="w-full h-full  md:w-[80%] md:mx-auto">
         <Navbar/>
         <Routers/>
         </div>

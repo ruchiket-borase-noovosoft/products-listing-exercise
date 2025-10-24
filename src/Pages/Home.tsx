@@ -75,7 +75,7 @@ function Home() {
                         <span className="sr-only">Loading...</span>
                     </div>
                 </div> : products?.map((product) => (
-                    <ProductCard isInCart={isProductInCart(product.id)}
+                    <ProductCard key={product.id} isInCart={isProductInCart(product.id)}
                                  handleCart={handleCart}
                                  product={product}/>
                 ))}
