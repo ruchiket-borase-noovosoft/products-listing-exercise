@@ -61,7 +61,7 @@ function Home() {
 
     return (
         <>
-            <div className="flex items-center gap-4 p-4 w-full bg-gray-100 justify-center">
+            <div className="flex flex-wrap sm:flex-nowrap items-streatch gap-4 p-4 w-full bg-gray-100 justify-center">
                 <Search handleSearch={onSearch}/>
                 <CategorySelector
                     category={category as any}

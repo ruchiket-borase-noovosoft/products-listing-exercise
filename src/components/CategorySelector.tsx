@@ -11,7 +11,7 @@ type handleSelectCategoryPropType = {
 export default memo(function CategorySelector ({handleSelect, category}: handleSelectCategoryPropType){
 
     return (
-        <select className="py-2 px-4 bg-white rounded-md outline-none focus:ring ring-gray-500 border border-gray-300 transition-all"
+        <select className="py-2 w-full sm:w-auto px-4 bg-white rounded-md outline-none focus:ring ring-gray-500 border border-gray-300 transition-all"
                 value={category as string}
                 onChange={(e)=>{
             handleSelect(e.target.value as CategoryType)

@@ -1,6 +1,7 @@
 import type {ProductType} from "../utils/types/product.ts";
 import {useState} from "react";
 import Flower from "./interactive/icons/Flower.tsx";
+import Button from "./interactive/Button.tsx";
 
 export default function ProductCard ({product, isInCart, handleCart} : {product: ProductType, isInCart: boolean, handleCart: (product:ProductType, isInCart: boolean) => void}) {
     const discountedPrice = Math.round(product.discountPercentage) === 0 ? product.discountPercentage :  product.price - product.discountPercentage * product.price / 100 ;
@@ -29,9 +30,9 @@ export default function ProductCard ({product, isInCart, handleCart} : {product:
                 <div><h1  className={`text-xl font-bold`}>${discountedPrice.toFixed(2)} <span className="text-[10px] text-red-500 pl-1">{product.discountPercentage}% OFF</span></h1>
                     <p className="line-through text-xs text-gray-600">{product.price}</p>
                 </div>
-                <button onClick={handleOnClick} className="bg-black hover:bg-gray-900 text-white text-xs font-medium rounded-full py-2 px-3 transition-all">
-                    {loading ? <Flower className="animate-spin" /> :isInCart ? "Remove" : "Add To Cart"}
-                </button>
+                <Button onClick={handleOnClick} variant={isInCart ? "outline" : "primary"} loading={loading}>
+                    {isInCart ? "Remove" : "Add To Cart"}
+                </Button>
             </div>
             </div>
         </div>
