@@ -3,7 +3,7 @@ import {useState} from "react";
 import Flower from "./interactive/icons/Flower.tsx";
 
 export default function ProductCard ({product, isInCart, handleCart} : {product: ProductType, isInCart: boolean, handleCart: (product:ProductType, isInCart: boolean) => void}) {
-    const discountedPrice = Math.round(product.discountPercentage) === 0 ? product.discountPercentage :  product.discountPercentage * product.price / 100 ;
+    const discountedPrice = Math.round(product.discountPercentage) === 0 ? product.discountPercentage :  product.price - product.discountPercentage * product.price / 100 ;
     const [loading, setLoading]= useState(false);
 
     const handleOnClick = async () => {
