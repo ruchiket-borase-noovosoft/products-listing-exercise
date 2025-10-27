@@ -1,6 +1,5 @@
 import type {ProductType} from "../utils/types/product.ts";
 import {useState} from "react";
-import Flower from "./interactive/icons/Flower.tsx";
 import Button from "./interactive/Button.tsx";
 
 export default function ProductCard ({product, isInCart, handleCart} : {product: ProductType, isInCart: boolean, handleCart: (product:ProductType, isInCart: boolean) => void}) {

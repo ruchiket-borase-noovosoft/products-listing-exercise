@@ -1,11 +1,8 @@
-import Search from "../components/Search.tsx";
-import CategorySelector from "../components/CategorySelector.tsx";
 import {NavLink} from "react-router-dom";
 import { useContext} from "react";
-import {StoreDispatchProvider, StoreProvider} from "../utils/store.ts";
+import {StoreProvider} from "../utils/store.ts";
 import type {ProductType} from "../utils/types/product.ts";
 import ProductCard from "../components/ProductCard.tsx";
-import {API} from "../utils/api.ts";
 import ArrowLeft from "../components/interactive/icons/ArrowLeft.tsx";
 import useCart from "../utils/hooks/useCart.tsx";
 

@@ -1,4 +1,4 @@
-import {useCallback, useContext, useState} from "react";
+import {useCallback, useState} from "react";
 import useFetchProducts from "../utils/hooks/useFetchProducts.ts";
 import type {CATEGORIES as CategoryType} from "../utils/constants.ts";
 import {CATEGORIES} from "../utils/constants.ts";
