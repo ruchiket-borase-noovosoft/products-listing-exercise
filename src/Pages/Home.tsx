@@ -12,6 +12,7 @@ function Home() {
     const [category, setCategory] = useState<CategoryType>(CATEGORIES.ALL);
     const [handleCart, isProductInCart] = useCart()
     const {products, loading} = useFetchProducts(search, category)
+
     const onSearch = useCallback(function onSearch (value: string){
         setSearch(value);
     },[]);
