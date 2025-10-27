@@ -1,6 +1,7 @@
 import type {ProductType} from "../types/product.ts";
 import {useContext} from "react";
 import {StoreDispatchProvider, StoreProvider} from "../store.ts";
+import {API} from "../api.ts";
 
 export default function useCart () {
     const dispatchStore = useContext(StoreDispatchProvider);
@@ -44,5 +45,5 @@ export default function useCart () {
         return !!isInCart;
     }
 
-    return [handleCart, isProductInCart]
+    return {handleCart, isProductInCart}
 }

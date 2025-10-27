@@ -10,7 +10,7 @@ import useCart from "../utils/hooks/useCart.tsx";
 function Home() {
     const [search, setSearch] = useState<string>("");
     const [category, setCategory] = useState<CategoryType>(CATEGORIES.ALL);
-    const [handleCart, isProductInCart] = useCart()
+    const {handleCart, isProductInCart} = useCart();
     const {products, loading} = useFetchProducts(search, category)
 
     const onSearch = useCallback(function onSearch (value: string){

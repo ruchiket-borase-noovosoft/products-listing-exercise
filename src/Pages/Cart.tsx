@@ -10,7 +10,8 @@ import ArrowLeft from "../components/interactive/icons/ArrowLeft.tsx";
 import useCart from "../utils/hooks/useCart.tsx";
 
 export default function Cart(){
-    const [handleCart, isProductInCart] = useCart()
+    const {cart} = useContext(StoreProvider)
+    const {handleCart, isProductInCart} = useCart()
 
     return(
         <div className="min-h-screen">
