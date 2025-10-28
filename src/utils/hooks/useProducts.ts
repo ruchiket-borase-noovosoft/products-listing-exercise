@@ -8,11 +8,12 @@ export default function useProducts (filters: FiltersType) {
     const {search, category, current} = filters;
 
     const {data:products, loading, error} = useFetch<ProductType>(
-        ["all", "products", search, category], () => {
-            if(!current && !search && category === CATEGORIES.ALL){
+        ["all", "products", search, category],
+        () => {
+            if(!current || (!search && category === CATEGORIES.ALL)){
                  return API.products.list()
             }
-           else  if(current === "category"|| search === ""){
+           else  if(current === "category" && (search === "" || category !== CATEGORIES.ALL) ){
                 return API.products.filter(category)
             }
                 return  API.products.search(search)

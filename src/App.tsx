@@ -8,8 +8,7 @@ function App() {
     <div className="w-full h-full  md:w-[80%] md:mx-auto">
         <Navbar/>
         <Routers/>
-        </div>
-        </Providers>
+    </div></Providers>
     )
 }
 
