@@ -1,13 +1,12 @@
 import {NavLink} from "react-router-dom";
-import { useContext} from "react";
-import {StoreProvider} from "../utils/store.ts";
+import {useStore} from "../utils/store.ts";
 import type {ProductType} from "../utils/types/product.ts";
 import ProductCard from "../components/ProductCard.tsx";
 import ArrowLeft from "../components/interactive/icons/ArrowLeft.tsx";
-import useCart from "../utils/hooks/useCart.tsx";
+import useCart from "../utils/hooks/useCart.ts";
 
 export default function Cart(){
-    const {cart} = useContext(StoreProvider)
+    const {cart} = useStore();
     const {handleCart, isProductInCart} = useCart()
 
     return(
@@ -17,11 +16,11 @@ export default function Cart(){
             </div>
             <div className="p-4">
             <h1 className="p-4 text-xs">
-                <span className="font-bold text-sm">{cart?.length || 0}</span> Total Items
+                <span className="font-bold text-sm">{cart?.products?.length || 0}</span> Total Items
             </h1>
                 <div className="flex gap-5 flex-wrap">
             {
-                cart?.map((product:ProductType) => (
+                cart?.products?.map((product:ProductType) => (
                     <ProductCard key={product.title + product.id} product={product} isInCart={isProductInCart(product.id)} handleCart={handleCart}/>
                 ))
             }</div>

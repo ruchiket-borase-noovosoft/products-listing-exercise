@@ -5,8 +5,26 @@ type APIMethodType = "GET" | "POST" | "DELETE" | "PUT";
 export type RequestType = [string, APIMethodType]
 
 const baseURL = 'https://dummyjson.com';
-function request(endpoint: string,  method: APIMethodType):RequestType{
-    return [`${baseURL}/${endpoint}`, method]
+
+async function request<T>(endpoint: string,  method: APIMethodType, payload: {headers?: Record<string|number|symbol, unknown>, body?:Record<string|number|symbol, unknown>} = {}){
+    const url = `${baseURL}/${endpoint}`;
+
+    const options = {
+        method,
+        headers: {
+            ...payload?.headers,
+            'Content-Type' : 'application/json'
+        },
+    ...(method !== "GET" && {body: JSON.stringify( payload?.body)})
+    }
+
+    try{
+        const response = await fetch(url, options as RequestInit)
+        return await response.json() as T;
+    }catch(err){
+        console.error(err)
+        throw err;
+    }
 }
 
 export const API = {
@@ -33,8 +51,8 @@ export const API = {
         get: (id: string | number) => (
             request(`carts/user/${id}`, "GET")
         ),
-        update: () => (
-            request(`carts/1`, "PUT")
+        update: (body:  Record<string | number | symbol, unknown> = {}) => (
+            request(`carts/1`, "PUT", {body})
         )
     }
 }

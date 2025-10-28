@@ -1,12 +1,15 @@
 import {NavLink, useLocation} from "react-router-dom";
 import UserDropdown from "./UserDropdown.tsx";
 import CartIcon from "./interactive/icons/CartIcon.tsx";
-import {useContext} from "react";
-import {StoreProvider} from "../utils/store.ts";
+import {useStore, useStoreDispatch} from "../utils/store.ts";
 import ShopIcon from "./interactive/icons/ShopIcon.tsx";
+import type {UserType} from "../utils/types/user.ts";
+import {API} from "../utils/api.ts";
+import type {CartType} from "../utils/types/cart.ts";
 
 export default function Navbar () {
-    const {cart} = useContext(StoreProvider)
+    const {cart} = useStore();
+    const dispatchStore = useStoreDispatch()
     const path = useLocation()
     const navs = [
         {
@@ -16,9 +19,20 @@ export default function Navbar () {
         {
             name: <CartIcon/>,
             path : "/cart",
-            count: cart.length || 0
+            count: cart?.products?.length || 0
         }
     ]
+
+    // user dropdown logic
+    async function handleUserSelect(user:UserType){
+            try{
+                dispatchStore({type: "set_user", payload: user});
+                const cart = await API.cart.get(user.id) as {carts?: CartType[]};
+                dispatchStore({type: "set_cart", payload: {...cart?.carts[0], userId:user.id}});
+            }catch(e) {
+                console.error(e)
+            }
+    }
 
     return (
         <div className="w-full sticky top-0 backdrop-blur-md bg-white/30 z-50 p-4 flex justify-between items-center border-b border-gray-200">
@@ -31,7 +45,7 @@ export default function Navbar () {
                     </NavLink>
                 ))}
                 </div>
-                <UserDropdown/>
+                <UserDropdown handleUserSelect={handleUserSelect}/>
             </div>
 
         </div>

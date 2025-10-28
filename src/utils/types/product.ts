@@ -1,9 +1,11 @@
+import type {CATEGORIES} from "../constants.ts";
+
 export interface ProductType {
     id: number,
     title: string,
     availabilityStatus: string,
     description: string,
-    category: string,
+    category: CATEGORIES,
     discountPercentage: number,
     images: string[],
     price: number,
