@@ -51,8 +51,8 @@ export const API = {
         get: (id: string | number) => (
             request(`carts/user/${id}`, "GET")
         ),
-        update: (body:  Record<string | number | symbol, unknown> = {}) => (
-            request(`carts/1`, "PUT", {body})
+        update: (id:number = 1,body:  Record<string | number | symbol, unknown> = {}) => (
+            request(`carts/${id}`, "PUT", {body})
         )
     }
 }

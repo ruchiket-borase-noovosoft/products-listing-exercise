@@ -10,19 +10,19 @@ export default function useCart () {
     async function handleCart(product:Partial<ProductType>){
         const isInCart = isProductInCart(product.id);
         try{
-            let payload;
+            let payload = {id:cart.id, userId: user.id, products:[]};
             if(isInCart){
                 // remove from cart logic
-                payload = cart.products.filter((item) => item.id !== product.id);
+                payload.products = cart.products.filter((item) => item.id !== product.id) || [];
             }else{
                 //add to cart
-                payload = [product];
+                payload.products = [product];
             }
             // request to api
-           const data = await API.cart.update({
+           const data = await API.cart.update(payload.id,{
                 userId: user.id,
                 merge: !isInCart,
-                products: payload
+                products: payload.products
             } as Record<string | number | symbol, unknown>)
             if(data){
                 if(isInCart){
